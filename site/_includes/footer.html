@@ -19,12 +19,26 @@
             console.log(data);
           });
 
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
+          .done(function(data){
+            //console.log(data);
+            var count = 0;
+            $.each(data, function(i, item){
+              if (item.county_name === 'Marion' && item.state === 'IN') {
+                count++;
+              }
+            });
+
+            $("#nearby-treatment-count").text(count);
+            $('#nearby-treatment-text').text('in Marion County');
+          });
+
           $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/ods')
           .done(function(data){
 
             var deaths = 0;
             $.each(data, function(i, item){
-              if (item.CountyName === 'Allen' && item.Year === 2016) {
+              if (item.CountyName === 'Marion' && item.Year === 2016) {
                 deaths = item.Deaths;
                 return false;
               }
