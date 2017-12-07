@@ -30,11 +30,13 @@
               }
             });
 
+
+            $("#nearby-treatment-count").text(data.length);
+            // $('#nearby-treatment-text').text('in Marion County');
+
             var group = new L.featureGroup(items);
             mymap.fitBounds(group.getBounds());
 
-            $("#nearby-treatment-count").text(items.length);
-            $('#nearby-treatment-text').text('in Marion County');
           });
 
           $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/ods')
