@@ -4,7 +4,7 @@
   <script>
 
     // This lat long sets the map to a default view of Hartford, CT
-     var mymap = L.map('mapid').setView([41.763, -72.685], 13);
+     var mymap = L.map('mapid').setView([39.7684, -86.158068], 13);
 
      // This access token comes from Openstreetmap
      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -23,11 +23,17 @@
           .done(function(data){
             //console.log(data);
             var treatment = [];
+            var items = [];
+
             $.each(data, function(i, item){
               if (item.state === 'IN' && item.county_name === 'Marion') {
                 treatment.push(item);
+                    items.push( L.marker([item.lat, item.lon]).bindPopup(item.name1).addTo(mymap));
               }
             });
+
+            var group = new L.featureGroup(items);
+            mymap.fitBounds(group.getBounds());
 
             $("#nearby-treatment-count").treatment(set.length);
             $('#nearby-treatment-text').text('in Marion County');
@@ -48,7 +54,7 @@
 
           });
 
-          $('#narcoticsAnonymous').click(function() {
+          /*$('#narcoticsAnonymous').click(function() {
 
             if ($('#narcoticsAnonymous').val()) {
 
@@ -64,7 +70,7 @@
                 mymap.fitBounds(group.getBounds());
               });
             }
-          });
+          });*/
       });
 
    </script>
