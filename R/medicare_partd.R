@@ -44,22 +44,42 @@ addressesn2 <- lapply(treaters$npi,function(x){
   return(blah)
 })
 
-addresses2 <- lapply(addresses,function(x){
-  return(as.data.frame(x$results$addresses))
+addresses <- bind_rows(addressesn2) %>%
+  filter(state %in% c('OH','WV','IN','CT'))
   
-})
 
-addresses3 <- bind_rows(addresses2)
 
-npi_info <- read.csv('~/Downloads/NPPES_Data_Dissemination_112717_120317_Weekly/npidata_20171127-20171203.csv',stringsAsFactors = F) %>%
-  mutate(npi = as.character(NPI))
+treaters2 <- merge(treaters,addresses,by="npi",all.x=T)
 
-treaters2 <- merge(treaters,npi_info[
-  c("npi","Entity.Type.Code","Employer.Identification.Number..EIN.",
-    "Provider.Organization.Name..Legal.Business.Name.",
-    "Provider.Credential.Text"),],by="npi",all.x=T)
-treaters2[is.na(treaters2$Entity.Type.Code),] %>% nrow()
+treaters.tmp <- treaters2 %>% filter(address_purpose == "LOCATION") %>%
+  mutate(postal2 =substr(postal_code, 0, 5),
+         uid=row_number()) 
+treaters3 <- treaters.tmp %>%
+  select(uid,address_1,city,state,postal2)
 
+write.csv(treaters3[1:1000,],file = "treaters_forgeo1.csv",col.names =FALSE,q=FALSE,row.names = FALSE)
+write.csv(treaters3[1001:2000,],file = "treaters_forgeo2.csv",col.names =FALSE,q=FALSE,row.names = FALSE)
+write.csv(treaters3[2001:3000,],file = "treaters_forgeo3.csv",col.names =FALSE,q=FALSE,row.names = FALSE)
+write.csv(treaters3[3001:4000,],file = "treaters_forgeo4.csv",col.names =FALSE,q=FALSE,row.names = FALSE)
+write.csv(treaters3[4001:4796,],file = "treaters_forgeo5.csv",col.names =FALSE,q=FALSE,row.names = FALSE)
+
+
+geocoded <- read.csv("~/Downloads/GeocodeResults1.csv",header=FALSE,stringsAsFactors = F)
+for (i in 2:5){
+  tmp <- read.csv(paste0("~/Downloads/GeocodeResults",i,".csv"),header=FALSE,stringsAsFactors = F)
+geocoded <- rbind(geocoded,tmp)
+}
+
+treaters4 <- geocoded %>% 
+  select(V1,V6) %>% 
+  rename(uid=V1,latlong=V6) %>%
+  merge(.,treaters.tmp,by="uid",all.y=T) %>%
+  mutate(lon=strsplit(latlong,split=",")[[1]][1],
+         lat=strsplit(latlong,split=",")[[1]][2]) %>%
+  filter(generic_name != 'PENTAZOCINE HCL/NALOXONE HCL')
+
+
+write.csv(file="./data/treatment_drug_prescribers_medicareD.csv",treaters4,row.names = F)
 
 #Overdose Prevention Therapy Indiana (optIN) Registry (IN)
 OD_prev_IN <- read.socrata('https://hhs-opioid-codeathon.data.socrata.com/resource/ytg4-cd6i.geojson')
