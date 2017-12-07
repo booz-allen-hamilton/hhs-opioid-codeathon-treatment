@@ -1,0 +1,23 @@
+<footer class="footer bg-secondary text-white">
+
+  <!-- Leaflet Map JS -->
+  <script>
+
+    // This lat long sets the map to a default view of Hartford, CT
+     var mymap = L.map('mapid').setView([41.763, -72.685], 13);
+
+     // This access token comes from Openstreetmap
+     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         maxZoom: 18,
+         id: 'mapbox.streets',
+         accessToken: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+     }).addTo(mymap);
+
+   </script>
+
+  <!-- Footer Content -->
+  <div class="container">
+    ®2017 Booz Allen Hamilton
+  </div>
+
+</footer>
