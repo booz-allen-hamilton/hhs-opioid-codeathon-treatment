@@ -2,27 +2,25 @@
 {% include header.html %}
 {% include jumbotron.html %}
 
-<div class="container-fluid d-flex flex-row justify-content-left">
-  <div class="float-left p-3">
+<div class="d-flex flex-row justify-content-left">
+  <div class="float-left p-3 mx-3">
     {% include card.html %}
   </div>
 
-  <div class="float-left p-3">
+  <div class="float-left p-3 mx-3">
     {% include card_2.html %}
   </div>
 
-  <div class="float-left p-3">
+  <div class="float-left p-3 mx-3">
     {% include card_3.html %}
   </div>
 
-  <div class="p-3 mx-3">
+  <div class="float-left p-3">
     {% include media_list.html %}
   </div>
 </div>
 
-<hr>
-
-<div class="m-5 flex">
+<div class="m-5">
   {% include map_filter.html %}
   {% include map.html %}
 </div>
