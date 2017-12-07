@@ -13,6 +13,28 @@
          accessToken: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
      }).addTo(mymap);
 
+     $( document ).ready(function() {
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/meetings')
+          .done(function(data){
+            console.log(data);
+          });
+
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/ods')
+          .done(function(data){
+            console.log(data);
+            $.each(data, function(i, item) {
+              //var marker = L.marker([item.lat, item.lon]).bindPopup(item.name1).addTo(mymap);
+            });
+          });
+
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
+          .done(function(data) {
+            $.each(data, function(i, item) {
+              var marker = L.marker([item.lat, item.lon]).bindPopup(item.name1).addTo(mymap);
+            });
+          });
+      });
+
    </script>
 
   <!-- Footer Content -->
