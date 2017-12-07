@@ -1,0 +1,77 @@
+<footer class="footer bg-secondary text-white">
+
+  <!-- Leaflet Map JS -->
+  <script>
+
+    // This lat long sets the map to a default view of Hartford, CT
+     var mymap = L.map('mapid').setView([41.763, -72.685], 13);
+
+     // This access token comes from Openstreetmap
+     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         maxZoom: 18,
+         id: 'mapbox.streets',
+         accessToken: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+     }).addTo(mymap);
+
+     $( document ).ready(function() {
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/meetings')
+          .done(function(data){
+            console.log(data);
+          });
+
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
+          .done(function(data){
+            //console.log(data);
+            var count = 0;
+            $.each(data, function(i, item){
+              if (item.county_name === 'Marion' && item.state === 'IN') {
+                count++;
+              }
+            });
+
+            $("#nearby-treatment-count").text(count);
+            $('#nearby-treatment-text').text('in Marion County');
+          });
+
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/ods')
+          .done(function(data){
+
+            var deaths = 0;
+            $.each(data, function(i, item){
+              if (item.CountyName === 'Marion' && item.Year === 2016) {
+                deaths = item.Deaths;
+                return false;
+              }
+            });
+            $("#deaths-count").text(deaths);
+            $('#deaths-text').text('in Allen County in 2016');
+
+          });
+
+          $('#narcoticsAnonymous').click(function() {
+
+            if ($('#narcoticsAnonymous').val()) {
+
+              $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
+              .done(function(data) {
+                var items = [];
+
+                $.each(data, function(i, item) {
+                    items.push( L.marker([item.lat, item.lon]).bindPopup(item.name1).addTo(mymap));
+                });
+
+                var group = new L.featureGroup(items);
+                mymap.fitBounds(group.getBounds());
+              });
+            }
+          });
+      });
+
+   </script>
+
+  <!-- Footer Content -->
+  <div class="container">
+    ®2017 Booz Allen Hamilton
+  </div>
+
+</footer>
