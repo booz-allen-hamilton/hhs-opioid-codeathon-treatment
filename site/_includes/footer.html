@@ -22,12 +22,10 @@
           $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
           .done(function(data){
             //console.log(data);
-            var treatment = [];
             var items = [];
 
             $.each(data, function(i, item){
               if (item.state === 'IN' && item.county_name === 'Marion') {
-                treatment.push(item);
                     items.push( L.marker([item.lat, item.lon]).bindPopup(item.name1).addTo(mymap));
               }
             });
@@ -35,7 +33,7 @@
             var group = new L.featureGroup(items);
             mymap.fitBounds(group.getBounds());
 
-            $("#nearby-treatment-count").treatment(set.length);
+            $("#nearby-treatment-count").text(items.length);
             $('#nearby-treatment-text').text('in Marion County');
           });
 
