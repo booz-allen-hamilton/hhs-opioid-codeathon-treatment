@@ -22,14 +22,14 @@
           $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
           .done(function(data){
             //console.log(data);
-            var count = 0;
+            var treatment = [];
             $.each(data, function(i, item){
-              if (item.county_name === 'Marion' && item.state === 'IN') {
-                count++;
+              if (item.state === 'IN' && item.county_name === 'Marion') {
+                treatment.push(item);
               }
             });
 
-            $("#nearby-treatment-count").text(count);
+            $("#nearby-treatment-count").treatment(set.length);
             $('#nearby-treatment-text').text('in Marion County');
           });
 
