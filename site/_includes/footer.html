@@ -14,10 +14,10 @@
      }).addTo(mymap);
 
      $( document ).ready(function() {
-          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/meetings')
+          /*$.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/meetings')
           .done(function(data){
             console.log(data);
-          });
+          });*/
 
           $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
           .done(function(data){
@@ -50,7 +50,7 @@
               }
             });
             $("#deaths-count").text(deaths);
-            $('#deaths-text').text('in Allen County in 2016');
+            $('#deaths-text').text('in Marion County in 2016');
 
           });
 
