@@ -21,7 +21,17 @@
 
           $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/ods')
           .done(function(data){
-            console.log(data);
+
+            var deaths = 0;
+            $.each(data, function(i, item){
+              if (item.CountyName === 'Allen' && item.Year === 2016) {
+                deaths = item.Deaths;
+                return false;
+              }
+            });
+            $("#deaths-count").text(deaths);
+            $('#deaths-text').text('in Allen County in 2016');
+
           });
 
           $('#narcoticsAnonymous').click(function() {
