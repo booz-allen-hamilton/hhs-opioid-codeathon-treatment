@@ -19,19 +19,21 @@
             console.log(data);
           });*/
 
-          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
+          $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treatment')
           .done(function(data){
             //console.log(data);
             var items = [];
-
+            var count = 0;
+            $("#nearby-treatment-count").text();
             $.each(data, function(i, item){
               if (item.state === 'IN' && item.county_name === 'Marion') {
                     items.push( L.marker([item.lat, item.lon]).bindPopup(item.name1).addTo(mymap));
-              }
+                    count = i;
+                  }
             });
 
 
-            $("#nearby-treatment-count").text(data.length);
+            //$("#nearby-treatment-count").text(count);
             // $('#nearby-treatment-text').text('in Marion County');
 
             var group = new L.featureGroup(items);
@@ -53,24 +55,6 @@
             $('#deaths-text').text('in Marion County in 2016');
 
           });
-
-          /*$('#narcoticsAnonymous').click(function() {
-
-            if ($('#narcoticsAnonymous').val()) {
-
-              $.getJSON('https://1pkha221hh.execute-api.us-east-1.amazonaws.com/dev/treament')
-              .done(function(data) {
-                var items = [];
-
-                $.each(data, function(i, item) {
-                    items.push( L.marker([item.lat, item.lon]).bindPopup(item.name1).addTo(mymap));
-                });
-
-                var group = new L.featureGroup(items);
-                mymap.fitBounds(group.getBounds());
-              });
-            }
-          });*/
       });
 
    </script>
