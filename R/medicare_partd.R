@@ -35,9 +35,34 @@ treatdrugs <- drugs[grepl('NALOXONE|METHADONE|BUPRENORPHINE|NALTREXONE',x = drug
 
 treaters <- rbind(virginia,westvirginia,connecticut,ohio) %>% filter(generic_name %in% treatdrugs)
 
+addressesn2 <- lapply(treaters$npi,function(x){
+  thing <- fromJSON(paste0('https://npiregistry.cms.hhs.gov/api?number=',x))
+  blah <- as.data.frame(thing$results$addresses)
+  if(nrow(blah) > 0){
+  blah$npi <- x
+  }
+  return(blah)
+})
 
-Overdose Prevention Therapy Indiana (optIN) Registry (IN)
-https://hhs-opioid-codeathon.data.socrata.com/resource/ytg4-cd6i.geojson
+addresses2 <- lapply(addresses,function(x){
+  return(as.data.frame(x$results$addresses))
+  
+})
+
+addresses3 <- bind_rows(addresses2)
+
+npi_info <- read.csv('~/Downloads/NPPES_Data_Dissemination_112717_120317_Weekly/npidata_20171127-20171203.csv',stringsAsFactors = F) %>%
+  mutate(npi = as.character(NPI))
+
+treaters2 <- merge(treaters,npi_info[
+  c("npi","Entity.Type.Code","Employer.Identification.Number..EIN.",
+    "Provider.Organization.Name..Legal.Business.Name.",
+    "Provider.Credential.Text"),],by="npi",all.x=T)
+treaters2[is.na(treaters2$Entity.Type.Code),] %>% nrow()
+
+
+#Overdose Prevention Therapy Indiana (optIN) Registry (IN)
+OD_prev_IN <- read.socrata('https://hhs-opioid-codeathon.data.socrata.com/resource/ytg4-cd6i.geojson')
 https://hhs-opioid-codeathon.data.socrata.com/resource/ytg4-cd6i.csv
 
 
