@@ -6,26 +6,26 @@ api.address <- 'https://data.cms.gov/resource/x77v-hecv.csv'
 
 ohio <- read.socrata(
   "https://data.cms.gov/resource/x77v-hecv.csv?nppes_provider_state=OH",
-  app_token = "rPm0Ul8BPjZ8eJKRebNjNm9B3"#,
-  # email     = "bonnie_jessica@bah.com",
-  # password  = "qHSH9k3UotgU"
+  app_token = "XXXXXXXXXXXXXXX"#,
+  # email     = "XXX@XXX.com",
+  # password  = "XXXXXXXXXXXXXXX"
 )
 
 virginia <- read.socrata(
   "https://data.cms.gov/resource/x77v-hecv.csv?nppes_provider_state=VA",
-  app_token = "rPm0Ul8BPjZ8eJKRebNjNm9B3"#,
-  # email     = "bonnie_jessica@bah.com",
-  # password  = "qHSH9k3UotgU"
+  app_token = "XXXXXXXXXXXXXXX"#,
+  # email     = "XXX@XXX.com",
+  # password  = "XXXXXXXXXXXXXXX"
 )
 
 connecticut <- read.socrata(
   "https://data.cms.gov/resource/x77v-hecv.csv?nppes_provider_state=CT",
-  app_token = "rPm0Ul8BPjZ8eJKRebNjNm9B3"
+  app_token = "XXXXXXXXXXXXXXX"
 )
 
 westvirginia <- read.socrata(
   "https://data.cms.gov/resource/x77v-hecv.csv?nppes_provider_state=WV",
-  app_token = "rPm0Ul8BPjZ8eJKRebNjNm9B3"
+  app_token = "XXXXXXXXXXXXXXX"
 )
 
 
