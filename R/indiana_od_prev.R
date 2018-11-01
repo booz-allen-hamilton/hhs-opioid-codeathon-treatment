@@ -3,9 +3,9 @@ require(dplyr)
 require(RSocrata)
 
 indiana_od_prev <- read.socrata('https://hhs-opioid-codeathon.data.socrata.com/resource/ytg4-cd6i.csv',
-             app_token = "rPm0Ul8BPjZ8eJKRebNjNm9B3",
-             email     = "bonnie_jessica@bah.com",
-             password  = "qHSH9k3UotgU")
+             app_token = "XXXXXXXXXXXXXXX",
+             email     = "XXX@XXX.com",
+             password  = "XXXXXXXXXXX")
 
 withlatlong <- indiana_od_prev %>%
   mutate(long=gsub("\\(",replacement="",strsplit(geocoded_column,split = " ",)[[1]][2]),
